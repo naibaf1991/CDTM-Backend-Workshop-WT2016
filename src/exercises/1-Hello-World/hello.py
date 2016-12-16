@@ -29,17 +29,23 @@ class maxi(fabi):
         return self.iq -50
 
 def randomlist():
-    l1 = [int(r.random()*10+1) for i in range(0,101)]
+    l1 = [int(r.random()*100+1) for i in range(0,101)]
     return l1
 
 def bubblesort(l1):
-        
+    n = len(l1)
+    for i in range(n,0,-1):
+        for k in range(0, n-1):
+            if l1[k] > l1[k+1]:
+                #l1[k:k+2] = l1[k:k+2:-1]
+                temp = l1[k]
+                l1[k] = l1[k+1]
+                l1[k+1] = temp
+    return l1
 
 def main():
-    tutorial2()
-    depp = maxi(100)
-    depp.getIQ()
     print randomlist()
+    print bubblesort(randomlist())
 
 if __name__ == '__main__':
     main()
