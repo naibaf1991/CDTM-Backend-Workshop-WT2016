@@ -8,6 +8,11 @@ app = Flask(__name__)
 def hello_world():
     return 'Hello World!'
 
+@app.route('/coffee')
+def maxi_ist_doof():
+    return 'bliblablub'
+
+
 if __name__ == '__main__':
     addr = "localhost"         # the same as 127.0.0.1
     port = 1337                
