@@ -17,6 +17,14 @@ sys.setdefaultencoding('utf-8')
 #   - We need this, so that the front-end works properly.
 app = Flask(__name__, static_url_path='')
 
+myList = List(0, 'Inbox')
+myTasks = [
+    Task('Think about lunch', '0', id=myList.id, status=Task.COMPLETED),
+    Task('Become a pro in backend development', id=myList.id, status=Task.NORMAL),
+    Task('CONQUER THE WORLD!', id=myList.id, status=Task.NORMAL)
+]
+
+
 @app.route('/', methods=['GET'])
 def frontEnd():
     return send_file('static/index.html')
@@ -28,8 +36,6 @@ def frontEnd():
 
 if __name__ == '__main__':
     app.run(host='localhost', port=1337, debug=True)
-    l1 = List(0,'Inbox')
-    t1 = [Task(0,'maxi_depp', l1.id,'normal','boring','heute',1),Task(1,'maxi_depp2',l1.id,'completed','exciting','13.01.',1)]
 
 
 
