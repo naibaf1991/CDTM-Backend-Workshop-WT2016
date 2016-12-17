@@ -3,8 +3,8 @@
 
 from flask import Flask, send_file
 import sys
-import task
-import list
+from task import Task as Task
+from list import List as List
 
 # allow special characters (e.g. üäö ...)
 reload(sys)
@@ -25,7 +25,7 @@ def frontEnd():
 
 if __name__ == '__main__':
     app.run(host='localhost', port=1337, debug=True)
-    l1 = list(0,'Inbox')
-    t1 = ([task(0,'maxi_depp', l1,'normal','boring','heute',1),task(1,'maxi_depp2',l1,'completed','exciting','13.01.',1)])
+    l1 = List(0,'Inbox')
+    t1 = [Task(0,'maxi_depp', l1,'normal','boring','heute',1),Task(1,'maxi_depp2',l1,'completed','exciting','13.01.',1)]
 
 
