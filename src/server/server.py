@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf8
 
-from flask import Flask, current_app
+from flask import Flask, send_file
 import sys
 
 # allow special characters (e.g. üäö ...)
@@ -15,9 +15,26 @@ sys.setdefaultencoding('utf-8')
 #   - We need this, so that the front-end works properly.
 app = Flask(__name__, static_url_path='')
 
-@app.route('/')
-def first_exercise():
-    return current_app.send_static_file('index.html')
+@app.route('/', methods=['GET'])
+def frontEnd():
+    return send_file('static/index.html')
+
+
+class List(object):
+    def __init__(self,id,title,revision):
+        self.id = id
+        self.title = title
+        self.revision = revision
+
+class Task(object):
+    def __init__(self,id,title,list,status,description,due,revision):
+        self.id = id
+        self.title = title
+        self.list = list
+        self.status = status
+        self.description = description
+        self.due = due
+        self.revision = revision
 
 
 

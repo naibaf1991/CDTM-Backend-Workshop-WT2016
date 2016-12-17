@@ -19,5 +19,8 @@ app = Flask(__name__, static_url_path='')
 def frontEnd():
     return send_file('static/index.html')
 
+
+
+
 if __name__ == '__main__':
     app.run(host='localhost', port=20008, debug=True)
