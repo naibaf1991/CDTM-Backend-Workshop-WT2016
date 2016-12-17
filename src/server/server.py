@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf8
 
-from flask import Flask, send_file
+from flask import Flask, send_file, jsonify
 import sys
 from task import Task as Task
 from list import List as List
@@ -19,15 +19,36 @@ app = Flask(__name__, static_url_path='')
 
 myList = List(0, 'Inbox')
 myTasks = [
-    Task('Think about lunch', '0', id=myList.id, status=Task.COMPLETED),
-    Task('Become a pro in backend development', id=myList.id, status=Task.NORMAL),
-    Task('CONQUER THE WORLD!', id=myList.id, status=Task.NORMAL)
+    Task('Think about lunch', '0', id='0', status = Task.COMPLETED),
+    Task('Become a pro in backend development', '0', status= Task.NORMAL),
+    Task('CONQUER THE WORLD!', '0', status = Task.NORMAL)
 ]
 
 
-@app.route('/', methods=['GET'])
-def frontEnd():
-    return send_file('static/index.html')
+VERSION = 2.0
+
+@app.route('/api/version', methods=['GET'])
+def version():
+    return jsonify({'version':VERSION})
+
+@app.route('/api/lists/', methods=['GET'])
+def apilists():
+    return jsonify({'lists':myList.jsonreturnList()})
+
+@app.route('/api/lists/:id/tasks', methods=['GET'])
+def apilisttasks():
+    output = []
+    for tasks in myTasks:
+        output.append(tasks.__dict__)
+    return jsonify({'tasks':output})
+
+@app.route('/api/lists/<int:idlist>/tasks')
+def apilistspecial(idlist):
+    output = []
+    for tasks in myTasks:
+        if myTasks.index(tasks) == idlist:
+            output.append(tasks.__dict__)
+    return jsonify({'tasks':output})
 
 @app.route('/', methods=['GET'])
 def frontEnd():
