@@ -24,5 +24,7 @@ def dict_from_row(row):
     return {} if row == None else dict(zip(row.keys(), row))
 
 
+
+
 if __name__ == '__main__':
     init_db()
