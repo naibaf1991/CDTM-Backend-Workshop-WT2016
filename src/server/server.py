@@ -3,6 +3,7 @@
 
 from flask import Flask, send_file, jsonify, request
 import sys
+from database import *
 
 from utils import json_abort
 from task import Task
@@ -12,7 +13,7 @@ from list import List
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
-VERSION = 2.0
+VERSION = 7.0
 
 myLists = [
     List('Inbox', id='0'),
@@ -144,3 +145,4 @@ def update_task(list_id, task_id):
 
 if __name__ == '__main__':
     app.run(host='localhost', port=20003, debug=True)
+    init_db()
