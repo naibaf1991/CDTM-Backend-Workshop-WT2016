@@ -102,5 +102,45 @@ def create_task(list_id):
 
     # 5. return new task
     return jsonify(newTask.__dict__)
+
+@app.route('/api/lists/<string:list_id>/tasks/<string:task_id>', methods=['PUT'])
+def update_task(list_id, task_id):
+    if (len([l for l in myLists if l.id == list_id]) < 1):
+        json_abort(404, 'List not found')
+
+    tasks = [t for t in myTasks if t.id == task_id and t.list == list_id]
+    if (len(tasks) < 1):
+        json_abort(404, 'Task not found')
+
+    try:
+        data = request.get_json()
+    except:
+        json_abort(400, 'No JSON provided')
+
+    if data == None:
+        json_abort(400, 'Invalid Content-Type')
+
+    title = data.get('title', None)
+    status = data.get('status', None)
+    description = data.get('description', None)
+    due = data.get('due', None)
+    revision = data.get('revision', None)
+
+    if title == None or status == None or description == None or revision == None:
+        json_abort(400, 'Invalid request parameters')
+
+    tasks = [t for t in myTasks if t.id == task_id and t.list == list_id]
+    if tasks[0].revision > revision:
+        json_abort(400, 'No update, oder revision')
+    else:
+        tasks[0].title = title
+        tasks[0].status = status
+        tasks[0].description = description
+        tasks[0].due = due
+        tasks[0].revision = revision
+
+    return jsonify(tasks[0].__dict__)
+
+
 if __name__ == '__main__':
     app.run(host='localhost', port=20003, debug=True)
